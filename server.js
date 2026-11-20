@@ -154,10 +154,13 @@ export function createApp({ env = process.env, fetchImpl = fetch } = {}) {
   });
 }
 
-if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
-  const host = process.env.HOST || '127.0.0.1';
-  const port = Number(process.env.PORT || 3000);
-  const app = createApp();
+export function startServer(env = process.env) {
+  const host = env.HOST || '127.0.0.1';
+  const port = Number(env.PORT || 3000);
+  const app = createApp({ env });
   app.requestTimeout = 60000;
   app.listen(port, host, () => console.log(`Health Check is running at http://${host}:${port}`));
+  return app;
 }
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) startServer();
