@@ -1,10 +1,14 @@
+const path = require('node:path');
+const appRoot = path.resolve(__dirname, '..');
+
 module.exports = {
   apps: [{
     name: 'health-check-web',
-    script: './server.js',
+    script: path.join(appRoot, 'server.js'),
     interpreter: process.env.HEALTHCHECK_NODE || 'node',
-    node_args: '--env-file=.env',
-    cwd: __dirname + '/..',
+    node_args: ['--env-file=' + path.join(appRoot, '.env')],
+    cwd: appRoot,
+    exec_mode: 'fork',
     instances: 1,
     autorestart: true,
     max_memory_restart: '256M',
