@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en" data-type="software">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#25282d">
+  <meta name="page-type" content="software"><meta name="site-kind" content="software">
+  <meta name="description" content="Check health claims and AI answers for known myths and harmful advice. Find warning signs, then compare the original evidence.">
+  <meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Health Check">
+  <link rel="manifest" href="/manifest.webmanifest"><link rel="icon" href="/icons/icon.svg" type="image/svg+xml"><link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="/workbench.css"><title>Check a claim · Health Check</title><script type="module" src="/workbench.js"></script>
+</head>
+<body>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5H4l-2 2v-9.5A8.5 8.5 0 0 1 10.5 4H13a8 8 0 0 1 8 7.5Z"/><path d="M7 10h9M7 14h6"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 5v16M12 5C8 2 4 3 2 4v15c3-1 7-1 10 2 3-3 7-3 10-2V4c-2-1-6-2-10 1Z"/></symbol>
+    <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12M3 6h1M3 12h1M3 18h1"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-external" viewBox="0 0 24 24"><path d="M8 5H5v14h14v-3M12 3h9v9M21 3 10 14"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v7c0 5-8 10-8 10S4 17 4 12V5Z"/><path d="m8 11 3 3 5-5"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
+    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M8 3v5m8-5v5M6 8h12v3a6 6 0 0 1-12 0ZM12 17v5"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
+  </defs></svg>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header"><div class="header-inner">
+    <a class="brand" href="#check" aria-label="Health Check home"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Health Check</span></a>
+    <div class="header-actions"><button id="connection-button" class="text-button"><svg class="icon" aria-hidden="true"><use href="#i-plug"/></svg><span>AI connection</span></button><button id="install-button" class="secondary-button install-button"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span>Install app</span></button></div>
+  </div></header>
+  <nav class="app-nav" aria-label="Main navigation"><div class="nav-inner"><button data-view="check" class="active" aria-current="page">Checker</button><button data-view="chat">AI review</button><button data-view="sources">Sources</button><button data-view="guide">Guide</button></div></nav>
+  <main id="main" tabindex="-1"><span id="page-name" class="sr-only">Claim checker</span>
+    <section id="view-check" class="view" aria-labelledby="check-title">
+      <div class="screen-heading"><h1 id="check-title">Claim checker</h1><p>Review health claims from posts, messages, and AI answers.</p></div>
+      <div class="review-workbench">
+        <div class="editor-column"><form id="check-form" class="checker-panel">
+          <div class="editor-heading"><label for="claim-input">Text to check</label><span>English</span></div>
+          <textarea id="claim-input" maxlength="12000" placeholder="Paste a health claim or an AI-generated answer." aria-describedby="check-help" required></textarea>
+          <div class="input-footer"><span id="char-count">0 / 12,000 characters</span><button id="clear-input" type="button" class="text-button">Clear</button></div>
+          <div class="editor-actions"><span class="keyboard-hint">Ctrl + Enter to check</span><button type="submit" class="primary-button">Check this claim<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        </form>
+        <div class="example-row"><span>Examples</span><button data-example="remedy">Remedy claim</button><button data-example="ai">AI answer</button><button data-example="careful">Correction</button></div>
+        <p id="check-help" class="field-note">Local pattern matching. Results can miss misinformation or flag a correction.</p>
+        </div>
+        <aside class="report-column" aria-label="Check report">
+          <div id="check-empty" class="empty-report"><h2>Report</h2><div class="report-placeholder"><svg class="report-icon" aria-hidden="true"><use href="#i-list"/></svg><h3 id="report-state">Nothing checked yet</h3><p>Run a check to see matched myths, warning signs, and source links.</p></div><dl class="report-facts"><div><dt>Method</dt><dd>Local pattern matching</dd></div><div><dt>Coverage</dt><dd>English health claims</dd></div><div><dt>Text sent to a server</dt><dd>None for this check</dd></div></dl><p class="report-limit">No match does not establish accuracy. Confirm important claims with current evidence.</p></div>
+          <div id="check-results" class="results" aria-live="polite" tabindex="-1" hidden></div>
+        </aside>
+      </div>
+    </section>
+    <section id="view-chat" class="view" hidden aria-labelledby="chat-title">
+      <div class="screen-heading"><h1 id="chat-title">AI review</h1><p>Examine a health answer with the assistant. It has no live web access.</p></div>
+      <div class="chat-card"><div class="chat-header"><h2>Conversation</h2><button id="new-chat" class="text-button"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>New chat</button></div><div id="chat-availability" class="chat-notice" role="status">Checking AI connection…</div>
+        <div id="chat-log" role="log" aria-label="Conversation" aria-live="polite"><div class="chat-welcome"><h3>Paste the answer you want to review.</h3><p>The assistant can explain warning signs and suggest references to check.</p><button class="suggestion" data-chat-example>Try a question about antibiotics and flu<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div></div>
+        <form id="chat-form"><label for="chat-input">Message</label><textarea id="chat-input" rows="2" maxlength="6000" placeholder="Paste an answer or ask a follow-up." required></textarea><div class="chat-compose-footer"><span>Messages are sent to the AI provider.</span><button type="submit" id="send-message" class="primary-button">Send message<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div></form>
+      </div><p class="field-note">This conversation clears on reload. Leave out names, medical records, and other private details.</p>
+    </section>
+    <section id="view-sources" class="view" hidden aria-labelledby="sources-title"><div class="screen-heading"><h1 id="sources-title">Health sources</h1><p>Reference links from the project's source registry. Check dates and supporting evidence.</p></div><div class="source-toolbar"><label for="source-search">Filter sources</label><div class="source-search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="source-search" type="search" placeholder="Organization, topic, or region" aria-label="Filter sources"></div></div><div class="source-table-head" aria-hidden="true"><span>Source</span><span>Website</span></div><div id="source-list" class="source-list"></div><p class="field-note">These pages are not fetched or verified by the app. Health Check is independent of the organizations listed.</p></section>
+    <section id="view-guide" class="view" hidden aria-labelledby="guide-title"><div class="screen-heading"><h1 id="guide-title">Verification guide</h1><p>Five checks for a health claim before you trust or share it.</p></div><div id="guide-list" class="guide-list"></div><div class="guide-note"><h2>Read the reference</h2><p>AI systems can invent studies and misread findings. Open the original source and read what it says. Ask a qualified health professional about decisions affecting your care.</p></div></section>
+    <footer class="page-footer"><span id="network-status" class="network-status"><i></i> Local checks ready</span><p>For health decisions, consult a qualified clinician.</p></footer>
+  </main>
+  <dialog id="connection-dialog" aria-labelledby="connection-title"><form method="dialog"><button class="dialog-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form><h2 id="connection-title">Connect the AI assistant</h2><p id="connection-detail">The app owner connects Hack Club AI on the server. Local claim checks already work.</p><form id="access-form"><label for="access-code">App access code</label><input id="access-code" type="password" autocomplete="off" placeholder="Code from the app owner"><p class="small-print">Use the app’s access code here. Your Hack Club API key belongs in the server settings. This tab keeps the code in memory until you reload.</p><button type="submit" class="primary-button">Use access code<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></form><p id="access-feedback" role="status"></p></dialog>
+  <dialog id="install-dialog" aria-labelledby="install-title"><form method="dialog"><button class="dialog-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form><h2 id="install-title">Install Health Check</h2><p id="install-instructions"></p><p class="small-print">Installation requires HTTPS, or localhost on this computer. Claim checks work offline after the app has loaded once. AI chat needs internet access.</p><form method="dialog"><button class="primary-button">Got it</button></form></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body></html>
