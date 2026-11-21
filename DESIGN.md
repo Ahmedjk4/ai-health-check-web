@@ -6,7 +6,7 @@ A practical checking tool with a text editor and report. The user selected the r
 
 ## Structure
 
-A small header holds the product name, AI connection and installation controls. A tab row opens Checker, AI review, Sources and Guide. Each screen has a short title and one line of context. There is no marketing hero, slogan, promotional card grid or authority-logo strip.
+A small header holds the product name and installation control. A tab row opens Checker, AI review, Sources and Guide. Each screen has a short title and one line of context.
 
 On desktop, the checker has two panes: the editable claim and the report. Long reports scroll in their own pane while the claim remains visible. On phones, the report follows the editor in the page's normal scroll flow. An empty report describes its method and coverage. Editing previously checked text makes the report require a new check.
 
@@ -22,4 +22,4 @@ Mouse, keyboard and touch work through the same controls. Ctrl/Cmd+Enter checks 
 
 Preserve the existing curated health claims, source registry and API boundaries. Local checks do not establish truth. The AI assistant has no live web search. Never cache chat requests or responses.
 
-Cache version: healthcheck-shell-v4. Shell assets use the network while online and cached copies when offline. Screenshots are docs/desktop-workbench.jpg and docs/mobile-workbench.jpg.
+Shell assets use the network while online and cached copies when offline. Screenshots are docs/desktop-workbench.jpg and docs/mobile-workbench.jpg.

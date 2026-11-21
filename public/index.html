@@ -21,13 +21,12 @@
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="m12 2 8 3v7c0 5-8 10-8 10S4 17 4 12V5Z"/><path d="m8 11 3 3 5-5"/></symbol>
     <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18"/></symbol>
-    <symbol id="i-plug" viewBox="0 0 24 24"><path d="M8 3v5m8-5v5M6 8h12v3a6 6 0 0 1-12 0ZM12 17v5"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 4v16M4 12h16"/></symbol>
   </defs></svg>
   <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-header"><div class="header-inner">
     <a class="brand" href="#check" aria-label="Health Check home"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg><span>Health Check</span></a>
-    <div class="header-actions"><button id="connection-button" class="text-button"><svg class="icon" aria-hidden="true"><use href="#i-plug"/></svg><span>AI connection</span></button><button id="install-button" class="secondary-button install-button"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span>Install app</span></button></div>
+    <button id="install-button" class="secondary-button install-button"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg><span>Install app</span></button>
   </div></header>
   <nav class="app-nav" aria-label="Main navigation"><div class="nav-inner"><button data-view="check" class="active" aria-current="page">Checker</button><button data-view="chat">AI review</button><button data-view="sources">Sources</button><button data-view="guide">Guide</button></div></nav>
   <main id="main" tabindex="-1"><span id="page-name" class="sr-only">Claim checker</span>
@@ -53,14 +52,20 @@
       <div class="screen-heading"><h1 id="chat-title">AI review</h1><p>Examine a health answer with the assistant. It has no live web access.</p></div>
       <div class="chat-card"><div class="chat-header"><h2>Conversation</h2><button id="new-chat" class="text-button"><svg class="icon" aria-hidden="true"><use href="#i-plus"/></svg>New chat</button></div><div id="chat-availability" class="chat-notice" role="status">Checking AI connection…</div>
         <div id="chat-log" role="log" aria-label="Conversation" aria-live="polite"><div class="chat-welcome"><h3>Paste the answer you want to review.</h3><p>The assistant can explain warning signs and suggest references to check.</p><button class="suggestion" data-chat-example>Try a question about antibiotics and flu<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div></div>
-        <form id="chat-form"><label for="chat-input">Message</label><textarea id="chat-input" rows="2" maxlength="6000" placeholder="Paste an answer or ask a follow-up." required></textarea><div class="chat-compose-footer"><span>Messages are sent to the AI provider.</span><button type="submit" id="send-message" class="primary-button">Send message<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></div></form>
+        <form id="chat-form">
+          <label for="chat-input">Message</label>
+          <textarea id="chat-input" rows="2" maxlength="6000" placeholder="Paste an answer or ask a follow-up." required></textarea>
+          <div class="chat-compose-footer">
+            <span id="chat-rules">Messages go to Hack Club AI. By sending, you confirm you’re 18 or younger and will follow the <a href="https://docs.ai.hackclub.com/guide/rules.html" target="_blank" rel="noopener noreferrer">Hack Club AI rules</a>.</span>
+            <button type="submit" id="send-message" class="primary-button" aria-describedby="chat-rules" disabled>Send message<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </div>
+        </form>
       </div><p class="field-note">This conversation clears on reload. Leave out names, medical records, and other private details.</p>
     </section>
     <section id="view-sources" class="view" hidden aria-labelledby="sources-title"><div class="screen-heading"><h1 id="sources-title">Health sources</h1><p>Reference links from the project's source registry. Check dates and supporting evidence.</p></div><div class="source-toolbar"><label for="source-search">Filter sources</label><div class="source-search"><svg class="icon" aria-hidden="true"><use href="#i-search"/></svg><input id="source-search" type="search" placeholder="Organization, topic, or region" aria-label="Filter sources"></div></div><div class="source-table-head" aria-hidden="true"><span>Source</span><span>Website</span></div><div id="source-list" class="source-list"></div><p class="field-note">These pages are not fetched or verified by the app. Health Check is independent of the organizations listed.</p></section>
     <section id="view-guide" class="view" hidden aria-labelledby="guide-title"><div class="screen-heading"><h1 id="guide-title">Verification guide</h1><p>Five checks for a health claim before you trust or share it.</p></div><div id="guide-list" class="guide-list"></div><div class="guide-note"><h2>Read the reference</h2><p>AI systems can invent studies and misread findings. Open the original source and read what it says. Ask a qualified health professional about decisions affecting your care.</p></div></section>
     <footer class="page-footer"><span id="network-status" class="network-status"><i></i> Local checks ready</span><p>For health decisions, consult a qualified clinician.</p></footer>
   </main>
-  <dialog id="connection-dialog" aria-labelledby="connection-title"><form method="dialog"><button class="dialog-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form><h2 id="connection-title">Connect the AI assistant</h2><p id="connection-detail">The app owner connects Hack Club AI on the server. Local claim checks already work.</p><form id="access-form"><label for="access-code">App access code</label><input id="access-code" type="password" autocomplete="off" placeholder="Code from the app owner"><p class="small-print">Use the app’s access code here. Your Hack Club API key belongs in the server settings. This tab keeps the code in memory until you reload.</p><button type="submit" class="primary-button">Use access code<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button></form><p id="access-feedback" role="status"></p></dialog>
   <dialog id="install-dialog" aria-labelledby="install-title"><form method="dialog"><button class="dialog-close" aria-label="Close"><svg class="icon" aria-hidden="true"><use href="#i-close"/></svg></button></form><h2 id="install-title">Install Health Check</h2><p id="install-instructions"></p><p class="small-print">Installation requires HTTPS, or localhost on this computer. Claim checks work offline after the app has loaded once. AI chat needs internet access.</p><form method="dialog"><button class="primary-button">Got it</button></form></dialog>
   <div id="toast" class="toast" role="status" hidden></div>
 </body></html>

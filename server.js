@@ -2,7 +2,6 @@ import http from 'node:http';
 import { readFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
-import { timingSafeEqual } from 'node:crypto';
 import { analyze } from './public/lib/analyzer.js';
 import { sources } from './public/lib/resources.js';
 
@@ -29,11 +28,6 @@ async function readJson(req) {
   }
   try { return JSON.parse(Buffer.concat(chunks).toString()); }
   catch { throw new RequestError(400, 'The request could not be read.'); }
-}
-function matchesToken(actual, expected) {
-  const a = Buffer.from(actual || '');
-  const b = Buffer.from(expected);
-  return a.length === b.length && timingSafeEqual(a, b);
 }
 function validateMessages(messages) {
   if (!Array.isArray(messages) || !messages.length || messages.length > 10) throw new RequestError(400, 'Send between 1 and 10 messages.');
@@ -76,8 +70,7 @@ export function normalizeReview(content) {
 
 export function createApp({ env = process.env, fetchImpl = fetch } = {}) {
   const key = env.HACKCLUB_API_KEY?.trim();
-  const token = env.CHAT_ACCESS_TOKEN?.trim() || '';
-  const configured = Boolean(key && token.length >= 16);
+  const configured = Boolean(key);
   const buckets = new Map();
   let active = 0;
   return http.createServer(async (req, res) => {
@@ -87,7 +80,7 @@ export function createApp({ env = process.env, fetchImpl = fetch } = {}) {
     res.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
     try {
       const url = new URL(req.url, 'http://localhost');
-      if (url.pathname === '/api/config' && req.method === 'GET') return json(res, 200, { chatAvailable: configured, accessCodeRequired: true });
+      if (url.pathname === '/api/config' && req.method === 'GET') return json(res, 200, { chatAvailable: configured });
       if (url.pathname === '/health' && req.method === 'GET') return json(res, 200, { status: 'ok', chatAvailable: configured });
       if (url.pathname === '/api/chat' && req.method === 'POST') {
         if (req.headers.origin) {
@@ -96,7 +89,6 @@ export function createApp({ env = process.env, fetchImpl = fetch } = {}) {
           if (origin.host !== req.headers.host) throw new RequestError(403, 'This origin is not allowed.');
         }
         if (!configured) throw new RequestError(503, 'AI chat is not connected yet. You can still use the offline claim checker.');
-        if (!matchesToken(req.headers.authorization, `Bearer ${token}`)) throw new RequestError(401, 'Enter the correct app access code using AI connection.');
         const now = Date.now();
         for (const [id, entry] of buckets) if (entry.expires < now) buckets.delete(id);
         const ip = req.socket.remoteAddress;
@@ -104,6 +96,7 @@ export function createApp({ env = process.env, fetchImpl = fetch } = {}) {
         if (++bucket.count > 12) { res.setHeader('Retry-After', '60'); throw new RequestError(429, 'Too many messages. Try again in a minute.'); }
         buckets.set(ip, bucket);
         const body = await readJson(req);
+        if (body?.acceptsHackClubRules !== true) throw new RequestError(400, 'Open AI review and read the Hack Club AI rules before sending.');
         const messages = validateMessages(body?.messages);
         if (active >= 3) throw new RequestError(429, 'The assistant is busy. Try again shortly.');
         active++;

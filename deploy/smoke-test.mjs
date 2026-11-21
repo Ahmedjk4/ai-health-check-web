@@ -6,11 +6,13 @@ if (health.status !== 'ok') throw new Error('Unexpected health response.');
 console.log(`Health: ok. Chat configured: ${health.chatAvailable}.`);
 
 if (process.argv.includes('--chat')) {
-  if (!process.env.CHAT_ACCESS_TOKEN) throw new Error('Load the private .env before testing chat.');
   const response = await fetch(new URL('/api/chat', base), {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${process.env.CHAT_ACCESS_TOKEN}` },
-    body: JSON.stringify({ messages: [{ role: 'user', content: 'How should I verify a health claim written by an AI? Give practical verification steps.' }] }),
+    headers: { 'Content-Type': 'application/json', Origin: new URL(base).origin },
+    body: JSON.stringify({
+      messages: [{ role: 'user', content: 'How should I verify a health claim written by an AI? Give practical verification steps.' }],
+      acceptsHackClubRules: true,
+    }),
     signal: AbortSignal.timeout(60000),
   });
   const review = await response.json();

@@ -17,12 +17,11 @@ Open http://localhost:3000. The claim checker, source directory, and verificatio
 1. Copy `.env.example` to `.env`.
 2. Set `HACKCLUB_API_KEY` to your own Hack Club API key.
 3. Set `HACKCLUB_MODEL` to a currently available chat model ID. The example is `openai/gpt-4.1-mini`; confirm availability in your account.
-4. Set `CHAT_ACCESS_TOKEN` to a random private app access code of at least 16 characters. For example, generate one with `node -e "console.log(require('node:crypto').randomBytes(24).toString('hex'))"`.
-5. Restart `npm start`. Open **AI connection** in the website and enter that app access code. This field is **not** for the Hack Club API key.
+4. Restart `npm start` and open **AI review**.
 
-The API key is read only by the server. It is never served to the browser. The app access code stays in browser memory for the current tab and is required to use the chat endpoint. Claims are sent to Hack Club AI only when the user presses Send in the assistant. No accounts, analytics, or conversation database are included. Messages and reviews may still be processed/retained by the AI provider according to its policies.
+The server keeps the API key private. The assistant sends claims to Hack Club AI when the user presses **Send message**. Messages and reviews may be processed or retained by the AI provider according to its policies.
 
-The integration follows [Hack Club chat completions](https://docs.ai.hackclub.com/api/chat-completions.html). Check the [current available models](https://docs.ai.hackclub.com/models-list.html) and [service rules](https://docs.ai.hackclub.com/guide/rules.html) before enabling access for other people. The service has eligibility and usage restrictions; a shared app code is a technical access control, not proof of user eligibility. Use only an audience and deployment permitted by the provider. Never commit `.env`.
+The chat form asks people to confirm their eligibility and follow Hack Club AI’s rules when they send a message. See the [service rules](https://docs.ai.hackclub.com/guide/rules.html) and [available models](https://docs.ai.hackclub.com/models-list.html). Never commit `.env`.
 
 ## Use and install on your phone
 
@@ -70,9 +69,9 @@ Use qualified health professionals and current primary sources for consequential
 npm test
 ```
 
-Tests cover original pattern behavior, complete source references, server assets, PWA icons and shell, secret isolation, chat authentication, bounded message input, cross-origin rejection, provider errors, output screening, allowlisted references, and rate limiting. Provider calls are mocked: a live Hack Club request requires your credentials and an available model.
+Tests cover original pattern behavior, source references, PWA assets, secret isolation, the chat request flow, input limits, cross-origin rejection, provider errors, output screening, and rate limiting. The tests simulate provider responses.
 
-When changing cached frontend files, bump the cache version in `public/sw.js` (currently `healthcheck-shell-v4`) and the stylesheet/script references in `public/index.html` when entry files are renamed. Existing tabs keep their current worker until they close; reopen the app to activate the new version. API requests and chat content are excluded from the service-worker cache.
+When changing cached frontend files, bump the cache version in `public/sw.js` and update the stylesheet or script references in `public/index.html` if renamed. Close and reopen existing tabs to activate the new worker. The service worker excludes API requests and chat content.
 
 The November 2026 interface refinement is documented in `DESIGN.md`, `PRODUCT.md`, and `docs/DESIGN-REVIEW.md`. The current workbench layout is documented in `docs/WORKBENCH-REVIEW.md`. Current previews are `docs/desktop-workbench.jpg` and `docs/mobile-workbench.jpg`.
 

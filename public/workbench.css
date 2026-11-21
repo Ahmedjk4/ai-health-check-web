@@ -30,7 +30,6 @@ p { line-height: 1.65; }
 .header-inner { min-height: 64px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-size: 17px; font-weight: 650; letter-spacing: -.02em; white-space: nowrap; }
 .brand .icon { width: 22px; height: 22px; flex-basis: 22px; }
-.header-actions { display: flex; gap: 24px; align-items: center; }
 .primary-button, .secondary-button { display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 40px; padding: 9px 16px; border-radius: var(--radius); font-size: 14px; line-height: 1.5; font-weight: 600; white-space: nowrap; }
 .primary-button { background: var(--action); color: white; }
 .primary-button:hover:not(:disabled) { background: #424851; }
@@ -153,11 +152,7 @@ dialog::backdrop { background: #17212d77; }
 .dialog-close:hover { background: var(--soft); }
 dialog h2 { font-size: 20px; margin: 12px 24px 16px 0; }
 dialog p { color: var(--muted); font-size: 14px; margin: 16px 0 20px; line-height: 1.75; }
-dialog label { display: block; font-size: 13px; font-weight: 600; margin: 20px 0 8px; }
-dialog input { font-size: 16px; padding: 12px; min-height: 44px; width: 100%; color: var(--ink); border: 1px solid #bac3cf; border-radius: 6px; }
 dialog .small-print { font-size: 13px; }
-#access-feedback:empty { display: none; }
-#access-feedback { font-size: 13px; margin-bottom: 0; }
 .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: #252a32; color: white; z-index: 50; border-radius: 6px; padding: 14px 20px; font-size: 13px; line-height: 1.6; max-width: min(90%, 540px); box-shadow: 0 8px 28px #19212c26; }
 @media (prefers-reduced-motion: no-preference) { button, a { transition: background-color 140ms ease-out, color 140ms ease-out; } }
 @media (max-width: 1000px) {
@@ -173,9 +168,6 @@ dialog .small-print { font-size: 13px; }
   .review-workbench { grid-template-columns: 1fr; gap: 24px; }
   .results { max-height: none; overflow: visible; }
   .header-inner { min-height: 60px; gap: 12px; }
-  .header-actions { gap: 16px; }
-  .header-actions .text-button { font-size: 13px; }
-  .header-actions .text-button .icon { display: none; }
   .install-button { font-size: 13px; padding-inline: 12px; }
   #claim-input { min-height: 220px; height: 240px; max-height: 600px; }
   .editor-actions { justify-content: flex-end; }
@@ -199,8 +191,6 @@ dialog .small-print { font-size: 13px; }
   .header-inner, .nav-inner, main { width: calc(100% - 32px); }
   .brand { font-size: 16px; gap: 8px; }
   .brand .icon { display: none; }
-  .header-actions { gap: 12px; }
-  #connection-button span { font-size: 12px; }
   .install-button { border: 0; padding-inline: 0; gap: 6px; font-size: 12px; }
   .nav-inner { justify-content: space-between; gap: 12px; }
   .app-nav button { min-height: 48px; font-size: 13px; }
